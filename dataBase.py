@@ -129,14 +129,29 @@ class DataBase():
     def predict(self):
         return self.clf.predict([vecteurX])
 
+    def eval_res(self, l1, l2):
+        dic = {x: {"VP": 0, "FP": 0, "FN": 0} for x in set(l1)}
+        for i in range(len(l1)):
+            if l1[i] == l2[i]:
+                dic[l1[i]]["VP"] += 1
+            else:
+                dic[l1[i]]["FN"] += 1
+                dic[l2[i]]["FP"] += 1
+        print dic
+
 if __name__ == "__main__":
     dataB = DataBase("Corpus")
     #print dataB.textsList
     #print dataB.motifsOccurences
     #print len(dataB.textsList)
     print dataB.classifier
+    liste = []
     for i in range(len(dataB.testX)):
-        print dataB.classifier.predict([dataB.testX[i]])
+        liste.append(dataB.classifier.predict([dataB.testX[i]])[0])
     print dataB.testY
+    print liste
+
+    dataB.eval_res(dataB.testY,liste)
+
     #print dataB.vecteursTraits
     #print dataB.predict("CorpusTest/1971_test7")
