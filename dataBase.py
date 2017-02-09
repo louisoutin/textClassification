@@ -137,7 +137,16 @@ class DataBase():
             else:
                 dic[l1[i]]["FN"] += 1
                 dic[l2[i]]["FP"] += 1
-        print dic
+        return dic
+
+    def printEvalRes(self, dic):
+        for i in dic:
+            rappel = float(dic[i]["VP"])/(dic[i]["VP"]+dic[i]["FN"])
+            precision = float(dic[i]["VP"]) / (dic[i]["VP"] + dic[i]["FP"])
+            #f_mesure = 2*(precision*rappel)/(precision+rappel)
+            print "Classe"+str(i)
+            print "Rappel : "+str(rappel)+"      Precision : "+str(precision)+"      F-mesure : "
+
 
 if __name__ == "__main__":
     dataB = DataBase("Corpus")
@@ -145,13 +154,14 @@ if __name__ == "__main__":
     #print dataB.motifsOccurences
     #print len(dataB.textsList)
     print dataB.classifier
-    liste = []
+    prediction = []
     for i in range(len(dataB.testX)):
-        liste.append(dataB.classifier.predict([dataB.testX[i]])[0])
+        prediction.append(dataB.classifier.predict([dataB.testX[i]])[0])
     print dataB.testY
-    print liste
+    print prediction
 
-    dataB.eval_res(dataB.testY,liste)
-
+    eval_res =dataB.eval_res(dataB.testY, prediction)
+    print eval_res
+    dataB.printEvalRes(eval_res)
     #print dataB.vecteursTraits
     #print dataB.predict("CorpusTest/1971_test7")
