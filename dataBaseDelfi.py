@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from textDelfi import *
-import os
-from extracteur.extracteur_motifs import *
-from sklearn import svm
-from sklearn.multiclass import OneVsRestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.svm import LinearSVC
 import xml.etree.ElementTree as ET
+
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.svm import LinearSVC
+
+from text.textDelfi import *
+
 
 class DataBaseDelfi():
 
@@ -52,7 +51,7 @@ class DataBaseDelfi():
         for portion in root.iter('portion'):
             date = portion.find('meta').find('date').attrib['annee']
             body = portion.find('texte').text
-            textsList.append(Text(date,body))
+            textsList.append(TextDelfi(date, body))
         return textsList
 
     """

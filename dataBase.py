@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from text import *
+from text.textChanson import *
 import os
-from extracteur.extracteur_motifs import *
+from extracteur.extracteurMotifs import *
 from sklearn import svm
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.model_selection import train_test_split
@@ -13,7 +13,7 @@ class DataBase():
     def __init__(self, folder):
         self.textsList = self.getTextsList(folder)
 
-        self.motifsOccurences = get_motifs(self.textsList,
+        self.motifsOccurences = ExtracteurMotifs(self.textsList).get_motifs(
                                            { 'minsup':1,
                                              'maxsup':10,
                                              'minlen':3,
@@ -39,7 +39,7 @@ class DataBase():
 
             # print path to all filenames.
             for filename in filenames:
-                text = Text(os.path.join(dirname, filename))
+                text = TextChanson(os.path.join(dirname, filename))
                 #print(os.path.join(dirname, filename))
                 textsList.append(text)
         return textsList

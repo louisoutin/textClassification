@@ -1,10 +1,6 @@
 import re
-import sys
-import os
 
-from extracteur.extracteur_motifs import *
-
-class Text():
+class TextChanson():
 
     def __init__(self,path):
         self.file = open(path)
@@ -27,7 +23,7 @@ class Text():
 
 if __name__ == "__main__":
 
-    texte = Text("Corpus/1990/1993_Letangoducachalot")
+    texte = TextChanson("Corpus/1990/1993_Letangoducachalot")
     print texte.body
     liste_motifs = get_motifs([texte.body])
     print liste_motifs
