@@ -3,7 +3,6 @@
 import os
 import sys
 from rstr_max.rstr_max import *
-from sklearn import datasets
 
 def exploit_rstr(r, rstr, dic_occur, options):
     l_str = []

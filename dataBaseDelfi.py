@@ -1,27 +1,39 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from text import *
+from textDelfi import *
 import os
 from extracteur.extracteur_motifs import *
 from sklearn import svm
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
+import xml.etree.ElementTree as ET
 
-class DataBase():
+class DataBaseDelfi():
 
-    def __init__(self, folder):
-        self.textsList = self.getTextsList(folder)
+    def __init__(self):
+
+        self.textsListApprentissage = self.getTextsList('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml')
+        self.textsListTest = self.getTextsList('corpus_deft/deft_2011/test/deft2011_diachronie_save_300.xml')
+
+        self.textsListApprentissage = self.textsListApprentissage[:20]
+        self.textsListTest = self.textsListTest[:10]
+
+        self.textsList = self.textsListApprentissage + self.textsListTest
 
         self.motifsOccurences = get_motifs(self.textsList,
                                            { 'minsup':1,
                                              'maxsup':10,
                                              'minlen':3,
                                              'maxlen':6})
-        self.vecteursTraits = self.getVecteursTraits()
-        self.classesTextes = self.getClassesTextes()
 
-        self.apprentissageX, self.testX, self.apprentissageY, self.testY = train_test_split(self.vecteursTraits, self.classesTextes, test_size=0.1, random_state=42)
+        self.apprentissageX = self.getVecteursTraits(self.textsListApprentissage)
+        self.testX = self.getVecteursTraits(self.textsListTest)
+
+        self.apprentissageY = self.getClassesTextes(self.textsListApprentissage)
+        self.testY = self.getClassesTextes(self.textsListTest)
+
+
         #self.testX, self.testY = [], []
         #self.separationEnsembles(0.1)
         #self.clf = svm.SVC()
@@ -33,39 +45,29 @@ class DataBase():
     """
     Retourne la liste des textes d'un dossier 'folder' passé en argument
     """
-    def getTextsList(self,folder):
+    def getTextsList(self,xmlFile):
         textsList = []
-        for dirname, dirnames, filenames in os.walk(folder):
-
-            # print path to all filenames.
-            for filename in filenames:
-                text = Text(os.path.join(dirname, filename))
-                #print(os.path.join(dirname, filename))
-                textsList.append(text)
+        tree = ET.parse(xmlFile)
+        root = tree.getroot()
+        for portion in root.iter('portion'):
+            date = portion.find('meta').find('date').attrib['annee']
+            body = portion.find('texte').text
+            textsList.append(Text(date,body))
         return textsList
 
     """
     Retourne la classe d'une annee 'year' passé en argument
     """
     def getClasse(self, year):
-        if year[:3] == "197":
-            return 0
-        if year[:3] == "198":
-            return 1
-        if year[:3] == "199":
-            return 2
-        if year[:3] == "200":
-            return 3
-        if year[:3] == "201":
-            return 4
+        return int(year[1:3])
 
     """
     Retourne le Vecteur X, pour chaque texte, son nombre d'occurence de chacun des motifs extraits
     """
-    def getVecteursTraits(self):
+    def getVecteursTraits(self,textsList):
         dico = self.motifsOccurences
         listeVecteurs = []
-        for numTexte in range(len(self.textsList)):
+        for numTexte in range(len(textsList)):
             vecteurTexte = []
             for motif in range(len(dico)):
                 if numTexte in dico[motif][1]:
@@ -98,29 +100,12 @@ class DataBase():
     """
     Retourne la liste des classes des textes contenus dans self.textsList
     """
-    def getClassesTextes(self):
+    def getClassesTextes(self,textsList):
         listeClasses = []
-        for texte in self.textsList:
+        for texte in textsList:
             listeClasses.append(self.getClasse(texte.date))
         return listeClasses
 
-
-
-    def separationEnsembles(self, pourcentage):
-        cp = {}
-        cp[0] = round(self.classesTextes.count(0)*pourcentage)
-        cp[1] = round(self.classesTextes.count(1)*pourcentage)
-        cp[2] = round(self.classesTextes.count(2)*pourcentage)
-        cp[3] = round(self.classesTextes.count(3)*pourcentage)
-        cp[4] = round(self.classesTextes.count(4)*pourcentage)
-        for i in range(len(self.vecteursTraits)):
-            if cp[self.classesTextes[i]]>0:
-                self.testX.append(self.vecteursTraits[i])
-                self.testY.append(self.classesTextes[i])
-                cp[self.classesTextes[i]]-=1
-            else:
-                self.apprentissageX.append(self.vecteursTraits[i])
-                self.apprentissageY.append(self.classesTextes[i])
 
 
     """
@@ -149,16 +134,17 @@ class DataBase():
 
 
 if __name__ == "__main__":
-    dataB = DataBase("Corpus")
-    #print dataB.textsList
+    dataB = DataBaseDelfi()
+    print dataB.textsListApprentissage
+    print dataB.textsListTest
     #print dataB.motifsOccurences
     #print len(dataB.textsList)
     print dataB.classifier
     prediction = []
     for i in range(len(dataB.testX)):
         prediction.append(dataB.classifier.predict([dataB.testX[i]])[0])
-    print "la réalité    ==>", dataB.testY
-    print "la prediction ==>", prediction
+    print dataB.testY
+    print prediction
 
     eval_res =dataB.eval_res(dataB.testY, prediction)
     print eval_res
