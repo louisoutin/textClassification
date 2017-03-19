@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="64a01ba3-c1a5-4a3d-8239-c0e657aaa9c4" name="Default" comment="New update:    &quot;Branchement&quot; de l'extraction des motifs au bag of words de scikit learn, donc performance beaucoup plus rapide (2min max avec 8gb de ram)&#10;">
+    <list default="true" id="64a01ba3-c1a5-4a3d-8239-c0e657aaa9c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -629,7 +629,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489958918618</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="New update:    &quot;Branchement&quot; de l'extraction des motifs au bag of words de scikit learn, donc performance beaucoup plus rapide (2min max avec 8gb de ram)&#10;">
+      <created>1489959909924</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1489959909924</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
