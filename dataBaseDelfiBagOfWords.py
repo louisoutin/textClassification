@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 import xml.etree.ElementTree as ET
 
+
+from extractorForBagOfWords import *
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import LinearSVC
 import pickle
 from text.textDelfi import *
-
+from sklearn.feature_extraction.text import CountVectorizer
 
 class DataBaseDelfi():
 
@@ -24,26 +26,24 @@ class DataBaseDelfi():
 
         print "get motifOccur"
 
+        self.motifsOccurences = pickle.load(open('motifsOccurenceDelfiPypy.pkl', 'rb'))
 
-        pklfile = open('motifsOccurenceDelfi.pkl','rb')
+        print "vector transform"
 
-        print "open apprentissage"
+        self.vectorizer = CountVectorizer(min_df=1, decode_error="ignore")
+        self.vecteursTraits = self.vectorizer.fit_transform(self.motifsOccurences)
 
-        apprentissageData = pickle.load(open('apprentissageData.pkl', 'rb'))
+        print "splitting"
 
-        print "open test"
+        self.apprentissageX = self.vecteursTraits[:len(self.textsListApprentissage)]
 
-        testData = pickle.load(open('testData.pkl', 'rb'))
+        self.apprentissageY = self.getClassesTextes(self.textsListApprentissage)
 
-        self.motifsOccurences = pickle.load(pklfile)
-        #print self.motifsOccurences
+        self.testX = self.vecteursTraits[len(self.textsListApprentissage):]
 
-        self.apprentissageX = apprentissageData[0]
-        self.testX = testData[0]
+        self.testY = self.getClassesTextes(self.textsListTest)
 
-        self.apprentissageY = apprentissageData[1]
-        self.testY = testData[1]
-
+        print "fitting"
 
         #self.testX, self.testY = [], []
         #self.separationEnsembles(0.1)
@@ -150,8 +150,9 @@ if __name__ == "__main__":
     #print len(dataB.textsList)
     print dataB.classifier
     prediction = []
-    for i in range(len(dataB.testX)):
-        prediction.append(dataB.classifier.predict([dataB.testX[i]])[0])
+    arrayX = dataB.testX.toarray()
+    for i in range(len(arrayX)):
+        prediction.append(dataB.classifier.predict([arrayX[i]])[0])
     print dataB.testY
     print prediction
 

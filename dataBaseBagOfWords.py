@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from ExtracteurBase import *
+from extractorForBagOfWords import *
 from sklearn.model_selection import train_test_split
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import LinearSVC
@@ -26,13 +26,16 @@ class DataBase():
     def __init__(self, folder):
         self.textsList = self.getTextsList(folder)
 
-        self.motifsOccurences = ExtracteurBase(self.textsList).get_motifs(
+        self.motifsOccurences = get_motifs(self.textsList,
                                            { 'minsup':2,
                                              'maxsup':10,
                                              'minlen':3,
                                              'maxlen':6})
 
-        self.vecteursTraits = self.getVecteursTraits()
+        print self.motifsOccurences[0]
+
+        self.vectorizer = CountVectorizer(min_df=1, decode_error="ignore")
+        self.vecteursTraits = self.vectorizer.fit_transform(self.motifsOccurences)
         self.classesTextes = self.getClassesTextes()
 
 
@@ -45,10 +48,9 @@ class DataBase():
         self.classifier.fit(self.apprentissageX, self.apprentissageY)
         self.scoreY = self.classifier.decision_function(self.testX)
 
-        self.ROCsimple()
+        #self.ROCsimple()
 
     def ROCsimple(self):
-        print "iiiccii"
         testY = label_binarize(self.testY, classes=[0, 1, 2, 3, 4])
         scoreY = self.scoreY
         fpr = dict()
@@ -235,8 +237,10 @@ if __name__ == "__main__":
     #print len(dataB.textsList)
     print dataB.classifier
     prediction = []
-    for i in range(len(dataB.testX)):
-        prediction.append(dataB.classifier.predict([dataB.testX[i]])[0])
+    #print dataB.vectorizer.get_feature_names()
+    arrayX = dataB.testX.toarray()
+    for i in range(len(arrayX)):
+        prediction.append(dataB.classifier.predict([arrayX[i]])[0])
     print "la réalité    ==>", dataB.testY
     print "la prediction ==>", prediction
 

@@ -2,16 +2,54 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from rstr_max.rstr_max import *
+import pickle
+from extracteur.rstr_max.rstr_max import *
 from text.textDelfi import *
 from text.textChanson import *
 import pickle
 import xml.etree.ElementTree as ET
 
+print"Lancement analyse textes ..."
+
 class ExtracteurMotifs():
 
-    def __init__(self,textsList):
-        self.textsList = textsList
+    def __init__(self):
+        print "get liste apprentissage"
+        self.textsListApprentissage = self.getTextsList("corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml")
+
+        print "get liste teste"
+        self.textsListTest = self.getTextsList('corpus_deft/deft_2011/test/deft2011_diachronie_save_300.xml')
+        self.textsList = self.textsListApprentissage + self.textsListTest
+
+        print "get motifs"
+
+        self.motifsOccurences = self.get_motifs()
+
+        print"get apprentissage X"
+
+        self.apprentissageX = self.getVecteursTraits(self.textsListApprentissage)
+
+        print"get test X"
+        self.testX = self.getVecteursTraits(self.textsListTest)
+
+        print"get apprentissa   ge Y"
+
+        self.apprentissageY = self.getClassesTextes(self.textsListApprentissage)
+
+        print"get test Y"
+        self.testY = self.getClassesTextes(self.textsListTest)
+
+        print "save"
+
+        self.save(self.motifsOccurences,'motifsOccurenceDelfi.pkl')
+
+        self.save((self.apprentissageX,self.apprentissageY), 'apprentissageData.pkl')
+
+        self.save((self.testX, self.testY), 'testData.pkl')
+
+    def save(self,data,path):
+        output = open(path, 'wb')
+        pickle.dump(data, output)
 
 
     def exploit_rstr(self,r, rstr, dic_occur, options):
@@ -37,10 +75,10 @@ class ExtracteurMotifs():
         #print l_str
         return l_str
 
-    def get_motifs(self,options = { 'minsup':1,
-                                            'maxsup':10,
-                                            'minlen':1,
-                                            'maxlen':10}):
+    def get_motifs(self,options = { 'minsup':2,
+                                            'maxsup':5,
+                                            'minlen':3,
+                                            'maxlen':6}):
         rstr = Rstr_max()
         for ligne in self.textsList:
             rstr.add_str(ligne.body)
@@ -49,17 +87,6 @@ class ExtracteurMotifs():
         l_motifs = self.exploit_rstr(r, rstr, dic_occur, options)
         return l_motifs
 
-    def get_motifs2(self,options = { 'minsup':1,
-                                            'maxsup':10,
-                                            'minlen':1,
-                                            'maxlen':10}):
-        rstr = Rstr_max()
-        for ligne in self.textsList:
-            rstr.add_str(ligne)
-        dic_occur= {x:{} for x in xrange(0,len(lignes_texte))}
-        r=rstr.go()
-        l_motifs = self.exploit_rstr(r, rstr, dic_occur, options)
-        return l_motifs
 
     """
     Retourne la liste des textes d'un dossier 'folder' passé en argument
@@ -74,8 +101,44 @@ class ExtracteurMotifs():
             textsList.append(TextDelfi(date, body))
         return textsList
 
+    """
+    Retourne la classe d'une annee 'year' passé en argument
+    """
+    def getClasse(self, year):
+        return int(year[1:3])
 
 
+
+
+    """
+    Retourne le Vecteur X, pour chaque texte, son nombre d'occurence de chacun des motifs extraits
+    """
+    def getVecteursTraits(self,textsList):
+        dico = self.motifsOccurences
+        print "dico :"
+        print len(dico)
+        listeVecteurs = []
+        for numTexte in range(len(textsList)):
+            vecteurTexte = []
+            for motif in range(len(dico)):
+                if numTexte in dico[motif][1]:
+                    vecteurTexte.append(dico[motif][1][numTexte])
+                else:
+                    vecteurTexte.append(0)
+            listeVecteurs.append(vecteurTexte)
+        return listeVecteurs
+
+    """
+    Retourne la liste des classes des textes contenus dans self.textsList
+    """
+    def getClassesTextes(self,textsList):
+        listeClasses = []
+        for texte in textsList:
+            listeClasses.append(self.getClasse(texte.date))
+        return listeClasses
+
+
+ExtracteurMotifs()
 
 
 
