@@ -30,7 +30,7 @@ class DataBaseDelfi():
 
         print "vector transform"
 
-        self.vectorizer = CountVectorizer(min_df=1, decode_error="ignore")
+        self.vectorizer = CountVectorizer(min_df=1, decode_error="ignore",lowercase=False)
         self.vecteursTraits = self.vectorizer.fit_transform(self.motifsOccurences)
 
         print "splitting"
@@ -136,13 +136,17 @@ class DataBaseDelfi():
         return dic
 
     def printEvalRes(self, dic):
+        f_mesureMoyenne = 0
+        cpt=0
         for i in dic:
+            cpt+=1
             rappel = float(dic[i]["VP"])/(dic[i]["VP"]+dic[i]["FN"])
             precision = float(dic[i]["VP"]) / (dic[i]["VP"] + dic[i]["FP"])
-            #f_mesure = 2*(precision*rappel)/(precision+rappel)
+            f_mesure = 2*((precision*rappel)/(precision+rappel))
+            f_mesureMoyenne+=f_mesure
             print "Classe"+str(i)
-            print "Rappel : "+str(rappel)+"      Precision : "+str(precision)+"      F-mesure : "
-
+            print "Rappel : "+str(rappel)+"      Precision : "+str(precision)+"      F-mesure : "+str(f_mesure)
+        print "FMOYENNE : "+str(f_mesureMoyenne/cpt)
 
 if __name__ == "__main__":
     dataB = DataBaseDelfi()
@@ -156,8 +160,17 @@ if __name__ == "__main__":
     print dataB.testY
     print prediction
 
+    cpt1=0
+    cpt2=0
+    for i in range(len(prediction)):
+        if abs(dataB.testY[i]-prediction[i])<1:
+            print dataB.testY[i], prediction[i]
+            cpt2+=1
+        cpt1+=1
+
     eval_res =dataB.eval_res(dataB.testY, prediction)
     print eval_res
     dataB.printEvalRes(eval_res)
+    print cpt1, cpt2
     #print dataB.vecteursTraits
     #print dataB.predict("CorpusTest/1971_test7")
