@@ -164,13 +164,13 @@ if __name__ == "__main__":
     cpt2=0
     for i in range(len(prediction)):
         if abs(dataB.testY[i]-prediction[i])<1:
-            print dataB.testY[i], prediction[i]
             cpt2+=1
         cpt1+=1
 
     eval_res =dataB.eval_res(dataB.testY, prediction)
     print eval_res
     dataB.printEvalRes(eval_res)
+    print "differences"
     print cpt1, cpt2
     #print dataB.vecteursTraits
     #print dataB.predict("CorpusTest/1971_test7")
