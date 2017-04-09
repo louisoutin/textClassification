@@ -1,0 +1,162 @@
+
+3-folds
+
+longueur patterns: 1-3
+
+(0.16059105720249781, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.157661132088915, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.15698046777246424, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.15697727742618012, 'SVC_lineaire', {'estimator__C': 1.5})
+(0.15653937142355834, 'SVC_lineaire', {'estimator__C': 0.5})
+(0.15614520698088452, 'SVC_lineaire', {'estimator__C': 2})
+(0.15587823828526715, 'SVC_lineaire', {'estimator__C': 1})
+(0.15574874047192158, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.15470061358037987, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.15416413024959683, 'SVC_lineaire', {'estimator__C': 5})
+(0.15250193161303577, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.1515359172726673, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.15004729966187402, 'SVC_lineaire', {'estimator__C': 0.1})
+(0.14587749168162156, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.14471179612973001, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.13506233396108303, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+(0.10976275334178995, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.10825343690507455, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.065369938299248934, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.064806816925769922, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.026741016349163611, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.026524406892588961, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+  ----------------------
+('Best classifier ', 'MultinomialNB')
+Best score: 0.161
+Best parameters set:
+{'estimator__alpha': 0.5, 'estimator__fit_prior': False}
+  ----------------------
+
+
+longueur patterns : 1-7
+
+(0.34922442799933728, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.33269282301993774, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.33116691133451959, 'SVC_lineaire', {'estimator__C': 2})
+(0.33098210677409373, 'SVC_lineaire', {'estimator__C': 5})
+(0.32885987437784447, 'SVC_lineaire', {'estimator__C': 1.5})
+(0.32848104905758585, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.32533211654044331, 'SVC_lineaire', {'estimator__C': 1})
+(0.31987042188619486, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.31878753081992195, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.31406651783565004, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.31243709204570691, 'SVC_lineaire', {'estimator__C': 0.5})
+(0.29394248887359842, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.28412840327399391, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.26292424300982253, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.24676619998073543, 'SVC_lineaire', {'estimator__C': 0.1})
+(0.19563860757751414, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+(0.1520524674284561, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.15141056441045525, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.022814971834461701, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.021850146683842477, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+  ----------------------
+('Best classifier ', 'MultinomialNB')
+Best score: 0.349
+Best parameters set:
+{'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+  ----------------------
+
+
+longueur patterns : 3-7
+
+(0.34932896065615765, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.33478422045821099, 'SVC_lineaire', {'estimator__C': 5})
+(0.33214239487193747, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.33098780553238444, 'SVC_lineaire', {'estimator__C': 2})
+(0.33028605334386008, 'SVC_lineaire', {'estimator__C': 1.5})
+(0.33000110205992583, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.32758244806807141, 'SVC_lineaire', {'estimator__C': 1})
+(0.31584051157697568, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.31573131914113817, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.31540390127305995, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.31248955935336492, 'SVC_lineaire', {'estimator__C': 0.5})
+(0.29537247766247177, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.28613964007126153, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.26492779214164075, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.24785627773992094, 'SVC_lineaire', {'estimator__C': 0.1})
+(0.19500266167839422, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+(0.15046140297441071, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.15045536056473005, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.022337196914243393, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.022248013073834831, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+  ----------------------
+('Best classifier ', 'MultinomialNB')
+Best score: 0.349
+Best parameters set:
+{'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+  ----------------------
+
+
+
+longueur patterns : 2-6
+
+(0.29430495454051642, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.28440513842600457, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.27966340622905944, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.27857917718203085, 'SVC_lineaire', {'estimator__C': 5})
+(0.27626061983115097, 'SVC_lineaire', {'estimator__C': 2})
+(0.27412676196149022, 'SVC_lineaire', {'estimator__C': 1.5})
+(0.27388716615571707, 'SVC_lineaire', {'estimator__C': 1})
+(0.26931291719076506, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.26566455304202474, 'SVC_lineaire', {'estimator__C': 0.5})
+(0.26112312035836494, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.25966887582232878, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.24617948638771653, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.2427712832812991, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.21006701063228059, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.20613038046343857, 'SVC_lineaire', {'estimator__C': 0.1})
+(0.13836370160966008, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+(0.090256874986363464, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.090161697976844368, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.017591630146727856, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.017588593758742447, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.00270679599192334, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.00270679599192334, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+  ----------------------
+('Best classifier ', 'MultinomialNB')
+Best score: 0.294
+Best parameters set:
+{'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+  ----------------------
+
+
+longueur patterns: 1-1000
+
+(0.38139617424674627, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.37203239895878198, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.36828669061512415, 'MultinomialNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.36674824900050046, 'SVC_lineaire', {'estimator__C': 5})
+(0.36365292509558095, 'SVC_lineaire', {'estimator__C': 2})
+(0.36149616565057924, 'SVC_lineaire', {'estimator__C': 1.5})
+(0.35853417788317504, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.35549480954187407, 'SVC_lineaire', {'estimator__C': 1})
+(0.34624554422262532, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': False})
+(0.34576542207877198, 'BernoulliNB', {'estimator__alpha': 0.1, 'estimator__fit_prior': True})
+(0.3425333686584669, 'SVC_lineaire', {'estimator__C': 0.5})
+(0.32923299438683939, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.32205529540767852, 'MultinomialNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+(0.28056646365488641, 'MultinomialNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.27785723428107639, 'SVC_lineaire', {'estimator__C': 0.1})
+(0.18847350450809608, 'MultinomialNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': False})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 2.5, 'estimator__fit_prior': True})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': False})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 1.0, 'estimator__fit_prior': True})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': False})
+(0.0050701599085022347, 'BernoulliNB', {'estimator__alpha': 0.5, 'estimator__fit_prior': True})
+  ----------------------
+('Best classifier ', 'MultinomialNB')
+Best score: 0.381
+Best parameters set:
+{'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+  ----------------------
