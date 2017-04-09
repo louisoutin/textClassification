@@ -518,7 +518,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491779788830</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Reorganisation">
+      <created>1491780051145</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1491780051145</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -565,7 +572,8 @@
     <MESSAGE value="Delfi support added" />
     <MESSAGE value="New update:    &quot;Branchement&quot; de l'extraction des motifs au bag of words de scikit learn, donc performance beaucoup plus rapide (2min max avec 8gb de ram)&#10;" />
     <MESSAGE value="Ajout f-mesure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout f-mesure" />
+    <MESSAGE value="Reorganisation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganisation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
