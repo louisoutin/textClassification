@@ -37,9 +37,9 @@ def exploit_rstr(r, rstr, dic_occur, options):
 
   return liiste
 
-def get_motifs(lignes_texte,options = { 'minsup':2,
-            'maxsup':10,
-            'minlen':1,
+def get_motifs(lignes_texte,options = { 'minsup':3,
+            'maxsup':7,
+            'minlen':2,
             'maxlen':10}):
   rstr = Rstr_max()
   for ligne in lignes_texte:
@@ -52,7 +52,7 @@ def get_motifs(lignes_texte,options = { 'minsup':2,
 if __name__=="__main__":
     from textTypes.textDelfi import *
 
-    liste_motifs = get_motifs([TextDelfi("1", "HATTIVATTAATTIZEEZEEZEE"),TextDelfi("1", "ATII ATTA"), TextDelfi("1", "AT")])
+    liste_motifs = get_motifs([TextDelfi("1", "HATTIVATTAATTI"),TextDelfi("1", "ATII ATTA"), TextDelfi("1", "AT")])
     # get_motifs prend comme paramètre une liste de chaines et des options
     # chaque chaine étant une ligne généralement
     # on peut ajouter un dictionnaire d'options en donnant des valeurs de support (effectif) minimal et maximal (minsup et maxsup) de même pour la longueur en caractères du motif (minlen et maxlen)

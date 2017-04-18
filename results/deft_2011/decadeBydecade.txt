@@ -1,4 +1,8 @@
 
+f-mesure pour le corpus de test avec MultinomialNB (0.1,False) sur 300 mots -->  0.328161818995
+
+f-mesure pour le corpus de test avec MultinomialNB (0.1,False) sur 500 mots -->  0.409213325332
+
 3-folds
 
 longueur patterns: 1-3

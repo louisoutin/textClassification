@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from itertools import cycle
+
+from sklearn.metrics import auc
+from sklearn.metrics import roc_curve
+from sklearn.preprocessing import label_binarize
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def ROCsimple(self):
     print "iiiccii"
     testY = label_binarize(self.testY, classes=[0, 1, 2, 3, 4])
@@ -32,14 +43,35 @@ def ROCsimple(self):
     plt.show()
 
 
-def ROCmultiple(self):
+def ROCmultiple(self,y_test,y_score):
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+    y_test = label_binarize(y_test, classes=[i for i in range(80,95)])
+    y_test = np.asarray(y_test)
+    y_score = label_binarize(y_score, classes=[i for i in range(80,95)])
+    y_score = np.asarray(y_score)
+
+    n_classes = y_test.shape[1]
+
+
+    for i in range(15):
+        print i
+        print y_test[:,i], y_score[:,i]
+        fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+
+    # Compute micro-average ROC curve and ROC area
+    fpr["micro"], tpr["micro"], _ = roc_curve(y_test.ravel(), y_score.ravel())
+    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
     # First aggregate all false positive rates
     all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
 
     # Then interpolate all ROC curves at this points
     mean_tpr = np.zeros_like(all_fpr)
     for i in range(n_classes):
-        mean_tpr += interp(all_fpr, fpr[i], tpr[i])
+        mean_tpr += np.interp(all_fpr, fpr[i], tpr[i])
 
     # Finally average it and compute AUC
     mean_tpr /= n_classes
@@ -52,6 +84,7 @@ def ROCmultiple(self):
 
     # Plot all ROC curves
     plt.figure()
+
     plt.plot(fpr["micro"], tpr["micro"],
              label='micro-average ROC curve (area = {0:0.2f})'
                    ''.format(roc_auc["micro"]),
@@ -73,6 +106,6 @@ def ROCmultiple(self):
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('Some extension of Receiver operating characteristic to multi-class')
+    plt.title('Courbe ROC sur la classification par decennies (500 mots)')
     plt.legend(loc="lower right")
     plt.show()

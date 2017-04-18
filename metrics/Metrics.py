@@ -34,8 +34,20 @@ class Metrics():
 
 
     def gaussianDistance(self, ground_truth, predictions):
-        diff = np.exp((-np.pi/10**2)*((predictions-ground_truth)**2))
-        return np.mean(diff)
+            diff = np.exp((-np.pi/10**2)*((predictions-ground_truth)**2))
+            return np.mean(diff)
+
+    def medianeGaussianDistance(self, ground_truth, predictions):
+            diff = np.exp((-np.pi/10**2)*((predictions-ground_truth)**2))
+            return np.median(diff)
+
+    def ecartTypeGaussianDistance(self, ground_truth, predictions):
+            diff = np.exp((-np.pi/10**2)*((predictions-ground_truth)**2))
+            return np.std(diff)
+
+    def varianceGaussianDistance(self, ground_truth, predictions):
+            diff = np.exp((-np.pi/10**2)*((predictions-ground_truth)**2))
+            return np.var(diff)
 
 if __name__=="__main__":
     g = np.array([1946])

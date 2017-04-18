@@ -27,10 +27,10 @@ class DelfiPatternsSaver():
         print "get motifs"
 
         self.motifsOccurences = get_motifs(self.textsList,
-                                           { 'minsup':2,
+                                           { 'minsup':1,
                                              'maxsup':10,
-                                             'minlen':1,
-                                             'maxlen':1000})
+                                             'minlen':3,
+                                             'maxlen':7})
 
         print "save"
 
@@ -56,4 +56,4 @@ class DelfiPatternsSaver():
         return textsList
 
 if __name__=="__main__":
-    DelfiPatternsSaver("../corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml", None, '../motifsOccurenceDelfiPypy_trainOnly_1-1000.pkl')
+    DelfiPatternsSaver("../corpus_deft/deft_2011/appr/deft2011_diachronie_appr_500.xml", "../corpus_deft/deft_2011/test/deft2011_diachronie_save_500.xml", '../extractedDatas/motifsOccurenceDelfiPypy_all_500_3-7_from1.pkl')

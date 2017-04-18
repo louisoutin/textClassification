@@ -24,7 +24,7 @@ class BasicPatternsSaver():
         print "get motifs"
 
         self.motifsOccurences = get_motifs(self.textsList,
-                                           { 'minsup':2,
+                                           { 'minsup':1,
                                              'maxsup':10,
                                              'minlen':2,
                                              'maxlen':7})

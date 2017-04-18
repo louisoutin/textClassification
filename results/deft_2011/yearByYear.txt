@@ -1,4 +1,54 @@
+GaussianMesure DEFT pour le corpus de test avec MultinomialNB (0.1,False) sur 300 mots --> 0.266368869838
+
+                                     """                              2-STRAT 300 mots :
+moyenne : 0.307503125958
+mediane : 0.0223411030535
+ecart-type : 0.394836563143
+variance : 0.155895911594
+
+GaussianMesure DEFT pour le corpus de test avec MultinomialNB (0.1,False) sur 500 mots --> 0.327811413395
+
+                                     """                              2-STRAT 500 mots :
+moyenne : 0.389819886594
+mediane : 0.1339057214
+ecart-type : 0.421278053994
+variance : 0.177475198777
+
+
+                                     """                                  "" + extraction  == 0.391969018957
+                                                                               avec longueur 1-10
+Methode BAG OF WORDS en 2 étapes, 300 mots:
+moyenne : 0.355852996793
+mediane : 0.0784973785195
+ecart-type : 0.406788789427
+variance : 0.165477119203
+
+
+Methode BAG OF WORDS en 2 étapes, 500 mots:
+moyenne : 0.424806288561
+mediane : 0.322718983267
+ecart-type : 0.421680239215
+variance : 0.177814224145
+
+
+
 3-folds
+
+year by year bag of words 300 mots:
+    moyenne : 0.332296105725
+    mediane : 0.0223411030535
+    ecart-type : 0.409620760233
+    variance : 0.167789167214
+
+
+year by year bag of words 500 mots:
+    moyenne : 0.398269323247
+    mediane : 0.1339057214
+    ecart-type : 0.4276672538
+    variance : 0.182899279973
+
+
+
 
 longueur patterns : 1-3
 

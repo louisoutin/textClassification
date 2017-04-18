@@ -17,7 +17,7 @@ from sklearn.svm import *
 import cPickle
 from textTypes.textDelfi import *
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
-
+from ClassifierUtils import *
 
 
 
@@ -89,76 +89,11 @@ class EvaluateClassifiersByDate():
 
 
     """
-    Retourne la liste des textes d'un dossier 'folder' passé en argument
-    """
-    def getTextsList(self,xmlFile):
-        textsList = []
-        tree = ET.parse(xmlFile)
-        root = tree.getroot()
-        for portion in root.iter('portion'):
-            date = portion.find('meta').find('date').attrib['annee']
-            body = portion.find('texte').text
-            textsList.append(TextDelfi(date, body))
-        return textsList
-
-    """
     Retourne la classe d'une annee 'year' passé en argument
     """
     def getClasse(self, year):
         return int(year[0:4])
 
-    """
-    Retourne le Vecteur X, pour chaque texte, son nombre d'occurence de chacun des motifs extraits
-    """
-    def getVecteursTraits(self,textsList):
-        dico = self.motifsOccurences
-        listeVecteurs = []
-        for numTexte in range(len(textsList)):
-            vecteurTexte = []
-            for motif in range(len(dico)):
-                if numTexte in dico[motif][1]:
-                    vecteurTexte.append(dico[motif][1][numTexte])
-                else:
-                    vecteurTexte.append(0)
-            listeVecteurs.append(vecteurTexte)
-        return listeVecteurs
-
-    """
-    Retourne le Vecteur X, pour un seul texte (a ne pas utiliser car il faut calculer avec tous les textes)
-    """
-    def getVecteurTexte(self,texte):
-        motifsTexte = get_motifs([texte],
-                                           { 'minsup':1,
-                                             'maxsup':10,
-                                             'minlen':3,
-                                             'maxlen':6})
-        vecteurTexte = []
-        dico = self.motifsOccurences
-        for indexMotif in range(len(dico)):
-            if dico[indexMotif][0] in [x[0] for x in motifsTexte]:
-                for motif in motifsTexte:
-                    if motif[0] == dico[indexMotif][0]:
-                        vecteurTexte.append(motif[1][0])
-            else:
-                vecteurTexte.append(0)
-        return vecteurTexte
-
-    """
-    Retourne la liste des classes des textes contenus dans self.textsList
-    """
-    def getClassesTextes(self,textsList):
-        listeClasses = []
-        for texte in textsList:
-            listeClasses.append(self.getClasse(texte.date))
-        return listeClasses
-
-
-
-    """
-    Predit la classe d'un texte passé par son chemin en parametre 'path'
-    """
-    def predict(self):
-        return self.clf.predict([vecteurX])
 
 
 
