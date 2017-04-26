@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score, average_precision_score
@@ -48,6 +48,17 @@ class Metrics():
     def varianceGaussianDistance(self, ground_truth, predictions):
             diff = np.exp((-np.pi/10**2)*((predictions-ground_truth)**2))
             return np.var(diff)
+
+    def decadesWellDetected(self, ground_truth, predictions):
+            gt = ground_truth
+            pred = predictions
+            cpt = 0
+            wellDetected = 0
+            for i in range(len(gt)):
+                cpt+=1
+                if abs(gt[i]-pred[i]) <= 10:
+                    wellDetected+=1
+            return float(wellDetected)/float(cpt)
 
 if __name__=="__main__":
     g = np.array([1946])

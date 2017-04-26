@@ -1,28 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import os
 from extractors.basicPatternsExtractor import *
-from sklearn.model_selection import train_test_split
-from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import LinearSVC
 from textTypes.textChanson import *
-from sklearn.preprocessing import label_binarize
-
-import numpy as np
-import matplotlib.pyplot as plt
-from itertools import cycle
-
-from sklearn import svm, datasets
-from sklearn.metrics import roc_curve, auc
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import label_binarize
 from sklearn.multiclass import OneVsRestClassifier
-from scipy import interp
-
-from sklearn.feature_extraction.text import CountVectorizer
-
-
 from metrics.resultEvaluation import *
+
+
 class ClassifierSongTexts():
 
     def __init__(self, folder):
@@ -39,16 +26,22 @@ class ClassifierSongTexts():
 
 
         self.apprentissageX, self.testX, self.apprentissageY, self.testY = train_test_split(self.vecteursTraits, self.classesTextes, test_size=0.1, random_state=42)
-        #self.testX, self.testY = [], []
-        #self.separationEnsembles(0.1)
-        #self.clf = svm.SVC()
-        #self.clf.fit(self.apprentissageX, self.apprentissageY)
+
         self.classifier = OneVsRestClassifier(LinearSVC(random_state=0))
-        print(len(self.apprentissageX))
         self.classifier.fit(self.apprentissageX, self.apprentissageY)
         self.scoreY = self.classifier.decision_function(self.testX)
 
+    def run(self):
 
+        prediction = []
+        for i in range(len(self.testX)):
+            prediction.append(self.classifier.predict([self.testX[i]])[0])
+        print "la réalité    ==>", self.testY
+        print "la prediction ==>", prediction
+
+        eval_res = evalRes(self.testY, prediction)
+        print eval_res
+        printEvalRes(eval_res)
 
     """
     Retourne la liste des textes d'un dossier 'folder' passé en argument
@@ -125,25 +118,10 @@ class ClassifierSongTexts():
                 self.apprentissageY.append(self.classesTextes[i])
 
 
-    """
-    Predit la classe d'un texte passé par son chemin en parametre 'path'
-    """
-    def predict(self):
-        return self.clf.predict([vecteurX])
 
 
 
 if __name__ == "__main__":
     dataB = ClassifierSongTexts("Corpus")
-
-    print dataB.classifier
-    prediction = []
-    for i in range(len(dataB.testX)):
-        prediction.append(dataB.classifier.predict([dataB.testX[i]])[0])
-    print "la réalité    ==>", dataB.testY
-    print "la prediction ==>", prediction
-
-    eval_res =eval_res(dataB.testY, prediction)
-    print eval_res
-    printEvalRes(eval_res)
+    dataB.run()
 

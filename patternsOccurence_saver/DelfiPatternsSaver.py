@@ -10,11 +10,14 @@ from textDelfi import *
 import cPickle
 import xml.etree.ElementTree as ET
 from bagOfPatternsExtractor import *
-
+import sys
 
 class DelfiPatternsSaver():
 
-    def __init__(self,apprentissageCorpus, testCorpus, savedFile):
+    def __init__(self,apprentissageCorpus, testCorpus, minlen, maxlen):
+
+
+
         print"Lancement analyse textes ..."
 
         print "get liste apprentissage"
@@ -29,11 +32,14 @@ class DelfiPatternsSaver():
         self.motifsOccurences = get_motifs(self.textsList,
                                            { 'minsup':1,
                                              'maxsup':10,
-                                             'minlen':3,
-                                             'maxlen':7})
+                                             'minlen':minlen,
+                                             'maxlen':maxlen})
 
         print "save"
-
+        if testCorpus == None or testCorpus == "None":
+            savedFile = "../extractedDatas/motifsOccurenceDelfiPypy_onlyTrain_nbWords="+apprentissageCorpus[-7:-4]+"_minlen="+str(minlen)+"_maxlen="+str(maxlen)
+        else:
+            savedFile = "../extractedDatas/motifsOccurenceDelfiPypy_nbWords="+apprentissageCorpus[-7:-4]+"_minlen="+str(minlen)+"_maxlen="+str(maxlen)
         self.save(self.motifsOccurences, savedFile)
 
     def save(self, data, path):
@@ -44,7 +50,7 @@ class DelfiPatternsSaver():
     Retourne la liste des textes d'un dossier 'folder' passé en argument
     """
     def getTextsList(self,xmlFile):
-        if xmlFile==None:
+        if xmlFile==None or xmlFile=="None":
             return []
         textsList = []
         tree = ET.parse(xmlFile)
@@ -56,4 +62,9 @@ class DelfiPatternsSaver():
         return textsList
 
 if __name__=="__main__":
-    DelfiPatternsSaver("../corpus_deft/deft_2011/appr/deft2011_diachronie_appr_500.xml", "../corpus_deft/deft_2011/test/deft2011_diachronie_save_500.xml", '../extractedDatas/motifsOccurenceDelfiPypy_all_500_3-7_from1.pkl')
+    apprentissage = sys.argv[1]
+    test = sys.argv[2]
+    minlen = int(sys.argv[3])
+    maxlen = int(sys.argv[4])
+
+    DelfiPatternsSaver(apprentissage,test,minlen,maxlen)

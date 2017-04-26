@@ -1,44 +1,49 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import xml.etree.ElementTree as ET
 
-from sklearn.metrics import make_scorer
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
-from sklearn.pipeline import Pipeline
+
 from sklearn.model_selection import ShuffleSplit
 
 from GridMultipleClasifiers import GridMultipleClasifiers
-from metrics.resultEvaluation import *
-from metrics.Metrics import *
 
-from extractors.bagOfPatternsExtractor import *
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import *
 import cPickle
-from textTypes.textDelfi import *
+
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from ClassifierUtils import *
+import os.path
+import subprocess
 
 
+class EvaluateClassifiersDecadeByDecade(ClassifierUtils):
 
-class EvaluateClassifiersByDecade(ClassifierUtils):
-
-    def __init__(self):
+    def __init__(self, apprentissage, bagOfWords=False, minlen=3, maxlen=7):
 
         print "get text 1"
 
-        self.textsListApprentissage = self.getTextsList('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml')
-
-        print "get text 2"
-
-        self.textsListTest = self.getTextsList('corpus_deft/deft_2011/test/deft2011_diachronie_save_300.xml')
-
-        self.textsList = self.textsListApprentissage + self.textsListTest
+        self.textsListApprentissage = self.getTextsList(apprentissage)
 
         print "get motifOccur"
 
-        self.motifsOccurences = cPickle.Unpickler(open('extractedDatas/motifsOccurenceDelfiPypy_trainOnly_1-1000.pkl', 'rb')).load()
+        savedFile = "extractedDatas/motifsOccurenceDelfiPypy_onlyTrain_nbWords=" + apprentissage[-7:-4] + "_minlen=" + str(minlen) + "_maxlen=" + str(maxlen)
 
+        if not bagOfWords:
+            print "repeatly maximum strings extraction..."
+            if os.path.isfile(savedFile) :
+                print ("Extracted datas file already exist, unpickling...")
+                self.motifsOccurences = cPickle.Unpickler(open(savedFile, 'rb')).load()
+            else:
+                print ("Extracted datas file do not exist, computing it...")
+                os.chdir("patternsOccurence_saver")
+                subprocess.call(["pypy", "DelfiPatternsSaver.py", "../"+apprentissage, "None",str(minlen),str(maxlen)])
+                print ("Unpickling extracted datas file...")
+                os.chdir("../")
+                self.motifsOccurences = cPickle.Unpickler(open(savedFile, 'rb')).load()
+        else:
+                print "bag of word extraction..."
+                self.motifsOccurences = [texte.body for texte in self.textsListApprentissage]
 
 
     def run(self):
@@ -93,5 +98,5 @@ class EvaluateClassifiersByDecade(ClassifierUtils):
 
 
 if __name__ == "__main__":
-    dataB = EvaluateClassifiersByDecade()
+    dataB = EvaluateClassifiersDecadeByDecade('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml', bagOfWords=True)
     dataB.run()

@@ -1,44 +1,55 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import xml.etree.ElementTree as ET
 
-from sklearn.metrics import make_scorer
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import ShuffleSplit
 
-from GridMultipleClasifiers import GridMultipleClasifiers
 from metrics.confMatrixPlots import plot_confusion_matrix
-from metrics.resultEvaluation import *
-from metrics.Metrics import *
 
-from extractors.bagOfPatternsExtractor import *
+from metrics.Metrics import *
 from sklearn.multiclass import OneVsRestClassifier
-from sklearn.svm import *
+
 import cPickle
-from textTypes.textDelfi import *
+
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from ClassifierUtils import *
-import matplotlib.pyplot as plt
+
 from metrics.rocPlots import *
+import os.path
+import subprocess
 
 class ClassifierByDecades(ClassifierUtils):
 
-    def __init__(self):
+    def __init__(self, apprentissage, test, bagOfWords=False, minlen=3, maxlen=7):
 
         print "get text 1"
 
-        self.textsListApprentissage = self.getTextsList('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_500.xml')
+        self.textsListApprentissage = self.getTextsList(apprentissage)
 
         print "get text 2"
 
-        self.textsListTest = self.getTextsList('corpus_deft/deft_2011/test/deft2011_diachronie_save_500.xml')
+        self.textsListTest = self.getTextsList(test)
 
         self.textsList = self.textsListApprentissage + self.textsListTest
 
         print "get motifOccur"
 
-        self.motifsOccurences= cPickle.Unpickler(open('extractedDatas/motifsOccurenceDelfiPypy_all_500_3-7.pkl', 'rb')).load()
+        savedFile = "extractedDatas/motifsOccurenceDelfiPypy_nbWords=" + apprentissage[-7:-4] + "_minlen=" + str(minlen) + "_maxlen=" + str(maxlen)
+
+        if not bagOfWords:
+            print "repeatly maximum strings extraction..."
+            if os.path.isfile(savedFile):
+                print ("Extracted datas file already exist, unpickling...")
+                self.motifsOccurences = cPickle.Unpickler(open(savedFile, 'rb')).load()
+            else:
+                print ("Extracted datas file do not exist, computing it...")
+                os.chdir("patternsOccurence_saver")
+                subprocess.call(["pypy", "DelfiPatternsSaver.py", "../"+apprentissage, "../"+test, str(minlen), str(maxlen)])
+                print ("Unpickling extracted datas file...")
+                os.chdir("../")
+                self.motifsOccurences = cPickle.Unpickler(open(savedFile, 'rb')).load()
+        else:
+            print "bag of word extraction..."
+            self.motifsOccurences = [texte.body for texte in self.textsList]
 
 
 
@@ -61,8 +72,6 @@ class ClassifierByDecades(ClassifierUtils):
         self.vectorizer = TfidfVectorizer(min_df=1, decode_error="ignore",lowercase=False)
 
         self.Xapprentissage = self.vectorizer.fit_transform(self.motifsOccurencesApprentissage)
-
-        print self.Xapprentissage[0]
 
         self.Xtest = self.vectorizer.transform(self.motifsOccurencesTest)
 
@@ -90,11 +99,6 @@ class ClassifierByDecades(ClassifierUtils):
         plot_confusion_matrix(cnf_matrix, classes=class_names,
                               title='Confusion matrix, without normalization')
 
-        # Plot normalized confusion matrix
-        plt.figure()
-        plot_confusion_matrix(cnf_matrix, classes=class_names, normalize=True,
-                              title='Normalized confusion matrix')
-
         plt.show()
 
         print "prediction"
@@ -107,5 +111,5 @@ class ClassifierByDecades(ClassifierUtils):
 
 
 if __name__ == "__main__":
-    dataB = ClassifierByDecades()
+    dataB = ClassifierByDecades('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml', 'corpus_deft/deft_2011/test/deft2011_diachronie_save_300.xml')
     dataB.run()

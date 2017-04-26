@@ -18,27 +18,38 @@ import cPickle
 from textTypes.textDelfi import *
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from ClassifierUtils import *
+import os.path
+import subprocess
 
+class EvaluateClassifiersYearByYear(ClassifierUtils):
 
-
-class EvaluateClassifiersByDate():
-
-    def __init__(self):
+    def __init__(self, apprentissage, bagOfWords=False, minlen=3, maxlen=7):
 
         print "get text 1"
 
-        self.textsListApprentissage = self.getTextsList('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml')
+        self.textsListApprentissage = self.getTextsList(apprentissage)
 
-        print "get text 2"
-
-        self.textsListTest = self.getTextsList('corpus_deft/deft_2011/test/deft2011_diachronie_save_300.xml')
-
-        self.textsList = self.textsListApprentissage + self.textsListTest
 
         print "get motifOccur"
 
-        self.motifsOccurences = cPickle.Unpickler(open('motifsOccurenceDelfiPypy_trainOnly_3-7.pkl', 'rb')).load()
 
+        savedFile = "extractedDatas/motifsOccurenceDelfiPypy_onlyTrain_nbWords=" + apprentissage[-7:-4] + "_minlen=" + str(minlen) + "_maxlen=" + str(maxlen)
+
+        if not bagOfWords:
+            print "repeatly maximum strings extraction..."
+            if os.path.isfile(savedFile) :
+                print ("Extracted datas file already exist, unpickling...")
+                self.motifsOccurences = cPickle.Unpickler(open(savedFile, 'rb')).load()
+            else:
+                print ("Extracted datas file do not exist, computing it...")
+                os.chdir("patternsOccurence_saver")
+                subprocess.call(["pypy", "DelfiPatternsSaver.py", apprentissage, "None",str(minlen),str(maxlen)])
+                print ("Unpickling extracted datas file...")
+                os.chdir("../")
+                self.motifsOccurences = cPickle.Unpickler(open(savedFile, 'rb')).load()
+        else:
+                print "bag of word extraction..."
+                self.motifsOccurences = [texte.body for texte in self.textsListApprentissage]
 
 
     def run(self):
@@ -83,7 +94,6 @@ class EvaluateClassifiersByDate():
         gs.score_summary()
         gs.showResults()
         gs.showBest()
-        #self.classifier.fit(self.apprentissageX, self.apprentissageY)
 
 
 
@@ -98,5 +108,5 @@ class EvaluateClassifiersByDate():
 
 
 if __name__ == "__main__":
-    dataB = EvaluateClassifiersByDate()
+    dataB = EvaluateClassifiersYearByYear('corpus_deft/deft_2011/appr/deft2011_diachronie_appr_300.xml', bagOfWords=False)
     dataB.run()
